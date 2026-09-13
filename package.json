@@ -230,7 +230,7 @@
     "validate": "npm run check && npm run format:check && npm test"
   },
   "devDependencies": {
-    "@types/node": "^22.0.0",
+    "@types/node": "^26.5.1",
     "@types/vscode": "1.95.0",
     "@vscode/test-electron": "3.1.0",
     "@vscode/vsce": "3.9.2",
