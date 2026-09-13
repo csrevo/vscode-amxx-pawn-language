@@ -16,7 +16,7 @@ Também é possível instalar o pacote pelo terminal:
 code --install-extension artifacts/revo-pawn-1.0.0.vsix
 ```
 
-Requer VS Code **1.95 ou superior**. A extensão roda no host da área de trabalho, inclusive Remote SSH/WSL. Em uma sessão remota, os caminhos de compilador e includes devem existir na máquina remota. Não oferece execução em navegador/virtual workspace.
+Requer a versão do VS Code indicada em `engines.vscode` no `package.json`, sincronizada com os tipos da API usados no build. A extensão roda no host da área de trabalho, inclusive Remote SSH/WSL. Em uma sessão remota, os caminhos de compilador e includes devem existir na máquina remota. Não oferece execução em navegador/virtual workspace.
 
 ## Configurar
 
@@ -120,6 +120,10 @@ O compilador grava em um arquivo temporário na pasta de saída. O `.amxx` anter
 ## Desenvolvimento e testes
 
 Requer Node.js **22 ou superior** para as ferramentas de desenvolvimento.
+
+O GitHub Actions usa sempre a versão estável mais recente do Node.js (`current`). O Dependabot verifica novas versões de pacotes npm e Actions todos os dias às 09:00 (America/Sao_Paulo), incluindo versões major, e agrupa as atualizações por ecossistema em pull requests. As atualizações passam pelo CI antes de serem incorporadas; o `package-lock.json` registra as versões usadas em cada revisão.
+
+Após `npm install` ou `npm ci`, o script `sync:vscode-engine` alinha automaticamente `engines.vscode` no manifesto e no lockfile à versão da API de `@types/vscode` (`major.minor.0`). Os patches dos tipos são independentes dos patches do editor. Isso também ocorre antes de `npm run package`, evitando que uma atualização dos tipos quebre a geração do VSIX. Quando essa sincronização alterar os arquivos, inclua ambos no commit da atualização.
 
 ```powershell
 npm ci

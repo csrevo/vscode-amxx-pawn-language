@@ -90,7 +90,8 @@ export class WorkerClient {
         this.pump();
       });
       worker.on('error', (error) => {
-        if (this.worker === worker) this.fail(error);
+        if (this.worker === worker)
+          this.fail(error instanceof Error ? error : new Error(String(error)));
       });
       worker.on('exit', (code) => {
         if (this.worker === worker) this.fail(new Error(`Language worker exited (${code}).`));

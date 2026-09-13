@@ -5,7 +5,7 @@ import { lex } from '../src/core/lexer';
 
 function formatted(source: string, options?: Partial<FormatOptions>): string {
   const result = formatPawn(source, options);
-  assert.equal(result.skippedReason, undefined, result.skippedReason);
+  assert.equal(result.skippedReason, undefined, result.skippedReason ?? 'Formatting must succeed.');
   assert.equal(
     formatPawn(result.text, options).text,
     result.text,

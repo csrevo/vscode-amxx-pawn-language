@@ -6,7 +6,7 @@
   "publisher": "revo",
   "license": "GPL-3.0-only",
   "engines": {
-    "vscode": "^1.95.0",
+    "vscode": "^1.137.0",
     "node": ">=22"
   },
   "categories": [
@@ -216,6 +216,8 @@
     }
   },
   "scripts": {
+    "postinstall": "npm run sync:vscode-engine",
+    "sync:vscode-engine": "node scripts/sync-vscode-engine.mjs",
     "check": "tsc --noEmit",
     "format": "prettier --write --ignore-unknown .",
     "format:check": "prettier --check --ignore-unknown .",
@@ -226,12 +228,13 @@
     "test:compiler": "npm run build && tsc -p tsconfig.test.json && node scripts/test-compiler.mjs",
     "benchmark": "npm run build && node scripts/benchmark.mjs",
     "vscode:prepublish": "npm run check && npm run build -- --production",
+    "prepackage": "npm run sync:vscode-engine",
     "package": "vsce package --no-dependencies --allow-missing-repository --out artifacts/",
     "validate": "npm run check && npm run format:check && npm test"
   },
   "devDependencies": {
-    "@types/node": "^22.0.0",
-    "@types/vscode": "1.95.0",
+    "@types/node": "26.5.1",
+    "@types/vscode": "1.137.0",
     "@vscode/test-electron": "3.1.0",
     "@vscode/vsce": "3.9.2",
     "esbuild": "0.28.2",
