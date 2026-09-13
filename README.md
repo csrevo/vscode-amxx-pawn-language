@@ -166,5 +166,3 @@ node dist/cli.js --write caminho/plugin.sma
 `npm run package` gera o VSIX em `artifacts/`. O pacote contém os bundles, gramática, snippets, licença e o código-fonte correspondente; não contém dependências de desenvolvimento, SDK, perfis de teste ou corpus privado. As bibliotecas de runtime utilizadas são apenas as nativas do Node e a API do VS Code.
 
 O identificador local é `revo.revo-pawn`. Antes de publicar no Marketplace, configure o publisher que você controla e o endereço real do repositório. Este projeto não foi publicado nem instalado no seu perfil principal automaticamente.
-
-Licença **GPL-3.0-only**. Consulte `LICENSE`, `NOTICE.md` e `docs/ANALYSIS.md`.
