@@ -1,0 +1,243 @@
+{
+  "name": "revo-pawn",
+  "displayName": "Revo Pawn",
+  "description": "AMX Mod X / Pawn: formatting, IntelliSense, navigation and compiler diagnostics.",
+  "version": "1.0.0",
+  "publisher": "revo",
+  "license": "GPL-3.0-only",
+  "engines": {
+    "vscode": "^1.95.0",
+    "node": ">=22"
+  },
+  "categories": [
+    "Programming Languages",
+    "Formatters",
+    "Snippets"
+  ],
+  "keywords": [
+    "pawn",
+    "amxx",
+    "amxmodx",
+    "sma",
+    "formatter",
+    "revo"
+  ],
+  "main": "./dist/extension.js",
+  "extensionKind": [
+    "workspace"
+  ],
+  "activationEvents": [
+    "onLanguage:amxxpawn"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": "limited",
+      "description": "Editing and formatting work in Restricted Mode. Running the compiler requires a trusted workspace.",
+      "restrictedConfigurations": [
+        "revo_pawn.compiler.path",
+        "revo_pawn.compiler.arguments",
+        "revo_pawn.compiler.outputDirectory",
+        "revo_pawn.compiler.compileOnSave"
+      ]
+    },
+    "virtualWorkspaces": {
+      "supported": false,
+      "description": "Include resolution and the AMXX compiler need a local or remote file system."
+    }
+  },
+  "contributes": {
+    "languages": [
+      {
+        "id": "amxxpawn",
+        "aliases": [
+          "Pawn (AMX Mod X)",
+          "AMXXPawn",
+          "Pawn"
+        ],
+        "extensions": [
+          ".sma",
+          ".inc"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "amxxpawn",
+        "scopeName": "source.amxxpawn",
+        "path": "./syntaxes/pawn.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "amxxpawn",
+        "path": "./snippets/pawn.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "revo_pawn.compile",
+        "title": "Compile Plugin",
+        "category": "Revo Pawn",
+        "enablement": "isWorkspaceTrusted && editorLangId == amxxpawn && resourceExtname == .sma"
+      },
+      {
+        "command": "revo_pawn.compileLocal",
+        "title": "Compile with Local amxxpc",
+        "category": "Revo Pawn",
+        "enablement": "isWorkspaceTrusted && editorLangId == amxxpawn && resourceExtname == .sma"
+      },
+      {
+        "command": "revo_pawn.cancelCompilation",
+        "title": "Cancel Compilation",
+        "category": "Revo Pawn"
+      },
+      {
+        "command": "revo_pawn.showOutput",
+        "title": "Show Output",
+        "category": "Revo Pawn"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "revo_pawn.compile",
+          "when": "editorLangId == amxxpawn && resourceExtname == .sma && isWorkspaceTrusted",
+          "group": "navigation"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Revo Pawn",
+      "properties": {
+        "revo_pawn.format.enable": {
+          "type": "boolean",
+          "default": true,
+          "scope": "resource",
+          "description": "Enable the Pawn document and selection formatter."
+        },
+        "revo_pawn.format.braceStyle": {
+          "type": "string",
+          "enum": [
+            "allman",
+            "preserve"
+          ],
+          "default": "allman",
+          "scope": "resource",
+          "description": "Put block braces on their own lines, or preserve their original placement. Existing statement line breaks are always retained."
+        },
+        "revo_pawn.format.maxBlankLines": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10,
+          "default": 2,
+          "scope": "resource",
+          "description": "Maximum consecutive blank lines outside protected text."
+        },
+        "revo_pawn.format.insertFinalNewline": {
+          "type": "boolean",
+          "default": true,
+          "scope": "resource",
+          "description": "End formatted files with a newline."
+        },
+        "revo_pawn.language.includePaths": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "scope": "resource",
+          "description": "Include directories shared by IntelliSense and the compiler. Supports ${workspaceFolder}, ${fileDirname}, ${env:NAME} and ~. Relative paths use the file's workspace folder."
+        },
+        "revo_pawn.language.maxFileSizeKB": {
+          "type": "integer",
+          "minimum": 64,
+          "maximum": 16384,
+          "default": 2048,
+          "scope": "resource",
+          "description": "Maximum UTF-8 file size for parsing and formatting."
+        },
+        "revo_pawn.language.maxIncludeFiles": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2048,
+          "default": 256,
+          "scope": "resource",
+          "description": "Maximum files in one transitive include graph."
+        },
+        "revo_pawn.language.webApiLinks": {
+          "type": "boolean",
+          "default": false,
+          "scope": "resource",
+          "description": "Link unresolved standard AMXX includes to the official API documentation."
+        },
+        "revo_pawn.compiler.path": {
+          "type": "string",
+          "default": "",
+          "scope": "resource",
+          "description": "Full path to amxxpc or amxxpc.exe. Empty searches for the exact executable beside the source file."
+        },
+        "revo_pawn.compiler.arguments": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "scope": "resource",
+          "description": "Additional compiler arguments, one per item. Passed directly without a shell. Input, output and include paths are managed by Revo Pawn."
+        },
+        "revo_pawn.compiler.outputDirectory": {
+          "type": "string",
+          "default": "${fileDirname}/compiled",
+          "scope": "resource",
+          "description": "Directory for compiled .amxx files. Created when compiling. Supports the same variables as includePaths."
+        },
+        "revo_pawn.compiler.compileOnSave": {
+          "type": "boolean",
+          "default": false,
+          "scope": "resource",
+          "description": "Compile saved .sma files in trusted workspaces."
+        },
+        "revo_pawn.compiler.timeoutSeconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 600,
+          "default": 60,
+          "scope": "resource",
+          "description": "Terminate compilation after this timeout."
+        },
+        "revo_pawn.compiler.showOutput": {
+          "type": "boolean",
+          "default": true,
+          "scope": "resource",
+          "description": "Reveal the output panel when compiling manually."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "check": "tsc --noEmit",
+    "format": "prettier --write --ignore-unknown .",
+    "format:check": "prettier --check --ignore-unknown .",
+    "build": "node scripts/build.mjs",
+    "watch": "node scripts/build.mjs --watch",
+    "test": "npm run build && tsc -p tsconfig.test.json && node --test .test-build/tests/*.test.js",
+    "test:integration": "npm run build && tsc -p tsconfig.test.json && node scripts/test-integration.mjs",
+    "test:compiler": "npm run build && tsc -p tsconfig.test.json && node scripts/test-compiler.mjs",
+    "benchmark": "npm run build && node scripts/benchmark.mjs",
+    "vscode:prepublish": "npm run check && npm run build -- --production",
+    "package": "vsce package --no-dependencies --allow-missing-repository --out artifacts/",
+    "validate": "npm run check && npm run format:check && npm test"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/vscode": "1.95.0",
+    "@vscode/test-electron": "3.1.0",
+    "@vscode/vsce": "3.9.2",
+    "esbuild": "0.28.2",
+    "prettier": "3.9.6",
+    "typescript": "7.0.2",
+    "vscode-oniguruma": "2.0.1",
+    "vscode-textmate": "9.3.2"
+  }
+}

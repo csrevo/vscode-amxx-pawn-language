@@ -1,0 +1,56 @@
+{
+  "AMXX plugin": {
+    "prefix": "amxxplugin",
+    "body": [
+      "#include <amxmodx>",
+      "",
+      "public plugin_init()",
+      "{",
+      "\tregister_plugin(\"${1:Plugin}\", \"${2:1.0.0}\", \"${3:Author}\");",
+      "\t$0",
+      "}"
+    ],
+    "description": "Minimal AMX Mod X plugin"
+  },
+  "Public callback": {
+    "prefix": "public",
+    "body": ["public ${1:callback}(${2:id})", "{", "\t$0", "}"],
+    "description": "Public callback"
+  },
+  "Stock function": {
+    "prefix": "stock",
+    "body": ["stock ${1:function_name}(${2:id})", "{", "\t$0", "}"],
+    "description": "Stock function"
+  },
+  "Loop over players": {
+    "prefix": "players",
+    "body": [
+      "new players[32], count;",
+      "get_players(players, count, \"${1:ch}\");",
+      "",
+      "for (new i = 0; i < count; i++)",
+      "{",
+      "\tnew id = players[i];",
+      "\t$0",
+      "}"
+    ],
+    "description": "Iterate connected players"
+  },
+  "Pawn documentation": {
+    "prefix": "pawndoc",
+    "body": [
+      "/**",
+      " * ${1:Description.}",
+      " *",
+      " * @param ${2:id} ${3:Description.}",
+      " * @return ${4:Result.}",
+      " */"
+    ],
+    "description": "Function documentation"
+  },
+  "Formatter off": {
+    "prefix": "revo-format-off",
+    "body": ["// revo-format off", "$0", "// revo-format on"],
+    "description": "Preserve a region verbatim"
+  }
+}

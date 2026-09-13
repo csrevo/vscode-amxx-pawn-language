@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.test-build/
+.vscode-test/
+.tools/
+artifacts/
+*.amxx
+*.amx
+*.log
+coverage/

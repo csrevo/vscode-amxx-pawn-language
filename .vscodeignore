@@ -1,0 +1,12 @@
+.vscode/**
+.github/**
+.tools/**
+.test-build/**
+.vscode-test/**
+artifacts/**
+node_modules/**
+**/*.map
+.gitignore
+.vscodeignore
+.prettierignore
+.gitattributes

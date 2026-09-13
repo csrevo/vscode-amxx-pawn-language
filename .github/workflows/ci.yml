@@ -1,0 +1,48 @@
+name: Validate Revo Pawn
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  unit:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-node@v7.0.0
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run validate
+
+  extension:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-node@v7.0.0
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Prepare isolated compiler SDK
+        shell: pwsh
+        run: |
+          node scripts/download-sdk.mjs
+          Expand-Archive -LiteralPath .tools/amxmodx-1.10.0-git5481-base-windows.zip -DestinationPath .tools/amxx-sdk -Force
+      - run: npm run test:compiler
+      - run: npm run test:integration
+      - run: npm run package
+      - uses: actions/upload-artifact@v7.0.1
+        with:
+          name: revo-pawn-vsix
+          path: artifacts/*.vsix
+          if-no-files-found: error

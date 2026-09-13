@@ -1,0 +1,16 @@
+{
+  "revo_pawn.compiler.path": "C:/amxmodx/addons/amxmodx/scripting/amxxpc.exe",
+  "revo_pawn.language.includePaths": [
+    "${workspaceFolder}/include",
+    "C:/amxmodx/addons/amxmodx/scripting/include"
+  ],
+  "revo_pawn.compiler.outputDirectory": "${workspaceFolder}/compiled",
+  "revo_pawn.compiler.arguments": ["-d2"],
+  "revo_pawn.format.braceStyle": "allman",
+  "[amxxpawn]": {
+    "editor.defaultFormatter": "revo.revo-pawn",
+    "editor.formatOnSave": true,
+    "editor.insertSpaces": true,
+    "editor.tabSize": 4
+  }
+}

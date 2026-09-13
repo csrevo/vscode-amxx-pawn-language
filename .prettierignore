@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.tools/
+.test-build/
+.vscode-test/
+artifacts/
+package-lock.json
+LICENSE
